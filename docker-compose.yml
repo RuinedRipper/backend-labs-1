@@ -1,0 +1,26 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro # :ro добавит надежности
+    depends_on:
+      - php-app
+      - node-app
+      - python-app
+
+  php-app:
+    build: ./php-app
+    expose:
+      - "8000"
+
+  node-app:
+    build: ./node-app
+    expose:
+      - "3000"
+
+  python-app:
+    build: ./python-app
+    expose:
+      - "5000"
